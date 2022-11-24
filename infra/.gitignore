@@ -3,3 +3,5 @@ terraform.tfstate
 terraform.tfstate.backup
 .terraform.lock.hcl
 .terraform/
+
+fnd-api-s2-version_router.zip
