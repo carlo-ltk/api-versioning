@@ -132,6 +132,8 @@ terraform apply
 
 In this prototype the available versions are stored in a `versions.auto.tfvars.json` file that get updated whenever a new version is created or removed. 
 
+Outside of this prototype the versions would be better stored in an SSM parameter in AWS
+
 To access the available versions you can run 
 
 ```
