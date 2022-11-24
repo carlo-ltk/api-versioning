@@ -85,7 +85,7 @@ The resulting architecture is illustrated here:
 
 In this Architecture: 
 
-* The user sends a request with `api-version` header set to the requested vesions (i.e. `daiquiry`)
+* The user sends a request with `api-version` header set to the requested version (i.e. `daiquiry`)
 * This request reaches the CloudFront distribution and triggers the Lambda@Edge Origin Request.
 * The Lambda@Edge function uses the provided header value and fetches data a configuration file that  contains `mappings` for API versions. 
 * The function then modifies the Origin and the Host header of the request and returns it back to CloudFront.
@@ -145,7 +145,7 @@ curl   https://d3ehik0tnv7107.cloudfront.net/ping  -H "api-version: daiquiri"
 }
 ```
 
-### Dismmiss the "daiquiri" version
+### Dismiss the "daiquiri" version
 
 Let's assume we want to get rid of the `daiquiri` version and all its associated resources. 
 
