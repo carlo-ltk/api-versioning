@@ -1,0 +1,29 @@
+service: fnd-api-s2
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '3'
+
+package:
+  patterns:
+    - '!infra/**'
+
+provider:
+  name: aws
+
+  deploymentMethod: direct
+
+  runtime: nodejs16.x
+  stage: ${opt:stage, "stable"}
+  region: us-east-1
+  apiName: ${self:service}-${self:provider.stage}
+  environment:
+      version: ${self:provider.stage}
+  
+functions:
+  ping:
+    handler: app/handler.ping
+    events:
+      - http:
+          path: /ping
+          method: get

@@ -1,0 +1,3 @@
+variable "versions" {
+  default = ["stable"]
+}

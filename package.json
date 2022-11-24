@@ -1,0 +1,16 @@
+{
+  "name": "fnd-api-s2",
+  "version": "1.0.0",
+  "description": "api versioning prototype",
+  "scripts": {
+    "serverless": "./node_modules/serverless/bin/serverless.js",
+    "terraform": "terraform -chdir=infra"
+    
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless": "^3.25.0"
+  }
+}

@@ -1,0 +1,5 @@
+# Terraform state is stored remotely in AWS S3 (Root account)
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+.terraform/
