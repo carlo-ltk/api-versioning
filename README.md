@@ -52,6 +52,8 @@ curl   https://d3ehik0tnv7107.cloudfront.net/ping
 }
 ```
 
+We would also like to be easy to dismiss a created version, i.e. remove its availability as well as all the resources associated to it in a one shot command. 
+
 ## Architecture
 
 The starting point is an architecture similar to the one in the diagram below, where 
@@ -116,7 +118,7 @@ Let's assume the content of this file is the following:
 
 There are two versions deployed, `stable` and `mojito`. 
 
-### Deploy a new version
+### Serve the "daiquiri" version
 
 Let's assume we did some change to the API code and we would like to deploy them to a new `daiquiri` version. 
 
@@ -145,7 +147,7 @@ curl   https://d3ehik0tnv7107.cloudfront.net/ping  -H "api-version: daiquiri"
 }
 ```
 
-### Dismiss the "daiquiri" version
+### Forget the "daiquiri" version
 
 Let's assume we want to get rid of the `daiquiri` version and all its associated resources. 
 
@@ -157,6 +159,6 @@ We will execture
 
 This will: 
 
-* removve the stack associated to this version (`serverless remove --stage mojito`)
+* remove the stack associated to this version (`serverless remove --stage mojito`)
 * remove the version from `versions.auto.tfvars.json`
-* apply the terraform changes needed to remove the availability of this versions.
+* apply the terraform changes needed to remove the availability of this version.
