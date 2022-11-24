@@ -4,7 +4,11 @@
 * [Problem](#the-problem)
 * [Architecture](#architecture)
 * [Usage](#usage)
-
+    * [Requirements](#requirements)
+    * [Setup](#setup)
+    * [Deploy new version](#serve-the-daiquiri-version)
+    * [Consume new version](#consume-the-daiquiri-version)
+    * [Dismiss a versions](#forget-the-daiquiri-version)
 
 
 ## The Problem
