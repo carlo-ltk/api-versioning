@@ -1,4 +1,4 @@
-# Header-based API Gateway versioning with Amazon CloudFront
+# Header-based API Gateway versioning with Cloudfront (powered by serverless and terraform)
 
 
 * [Problem](#the-problem)
