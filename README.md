@@ -58,8 +58,8 @@ We would also like to be easy to dismiss a created version, i.e. remove its avai
 
 The starting point is an architecture similar to the one in the diagram below, where 
 
-* Terraform manges the infrastructure that includes the CloudFront distribution and the DNS
-* A Serveless application manges the API resources including the API Gateway and the Lambda functions that compose our service 
+* Terraform manages the infrastructure that includes the CloudFront distribution and the DNS
+* A Serveless application manages the API resources including the API Gateway and the Lambda functions that compose our service 
 
 ![Diagram](doc/diagram-start.png)
 
