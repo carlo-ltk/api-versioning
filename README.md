@@ -108,7 +108,7 @@ Let's assume the content of this file is the following:
 ```
 {
   "versions": [
-    "daiquiri",
+    "mojito",
     "stable"
   ]
 }
@@ -118,41 +118,41 @@ There are two versions deployed, `stable` and `mojito`.
 
 ### Deploy a new version
 
-Let's assume we did some change to the API code and we would like to deploy them to a new `mojito` version. 
+Let's assume we did some change to the API code and we would like to deploy them to a new `daiquiri` version. 
 
 We need to execute the `serve.sh` script with the new version name as argument
 
 ```
-./serve.sh mojito
+./serve.sh daiquiri
 ```
 
 The script will: 
 
-* Deploy the api to the `mojito` stage (this will deploy a new API Gateway and Lambda function by running `serverless deploy --stage mojito`) 
+* Deploy the api to the `daiquiri` stage (this will deploy a new API Gateway and Lambda function by running `serverless deploy --stage daiquiri`) 
 * update the `versions.auto.tfvars.json` file with the new version 
 * apply the neeeded terraform changes to make the versions available through CloufFront
 
 
-### Consume the "mojito" version
+### Consume the "daiquiri" version
 
 ```
-curl   https://d3ehik0tnv7107.cloudfront.net/ping  -H "api-version: mojito"
+curl   https://d3ehik0tnv7107.cloudfront.net/ping  -H "api-version: daiquiri"
 ```
 
 ```
 {
-  "message": "Hey there, I'm the ping function and I executed successfully! (mojito)"
+  "message": "Hey there, I'm the ping function and I executed successfully! (daiquiri)"
 }
 ```
 
-### Dismmiss the "mojito" version
+### Dismmiss the "daiquiri" version
 
-Let's assume we want to get rid of the `mojito` version and all its associated resources. 
+Let's assume we want to get rid of the `daiquiri` version and all its associated resources. 
 
 We will execture
 
 ```
-./forget.sh mojito
+./forget.sh daiquiri
 ```
 
 This will: 
