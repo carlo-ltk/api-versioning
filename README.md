@@ -75,7 +75,7 @@ to deploy te `daiquiri` version of the API.
 
 The missing piece is how to instruct CloudFront to route the request to one stack or the another based on the request header. To do this we need: 
 
-* A new CloudFront origin for each new API Gateway that get created upon deployind a the serveless application to the new stage
+* A new CloudFront origin for each new API Gateway that get created upon deploying the serveless application to the new stage (version)
 * A Lambda@Edge function that has awareness of the existing `versions` and is capable of routing the request to the proper origin.
 
 The resulting architecture is illustrated here: 
@@ -114,13 +114,13 @@ Let's assume the content of this file is the following:
 }
 ```
 
-There are two version deployed, `stable` and `mojito`. 
+There are two versions deployed, `stable` and `mojito`. 
 
 ### Deploy a new version
 
 Let's assume we did some change to the API code and we would like to deploy them to a new `mojito` version. 
 
-We need to execute the `serve.sh` script with the new versions name as argument
+We need to execute the `serve.sh` script with the new version name as argument
 
 ```
 ./serve.sh mojito
