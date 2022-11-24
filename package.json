@@ -4,7 +4,8 @@
   "description": "api versioning prototype",
   "scripts": {
     "serverless": "./node_modules/serverless/bin/serverless.js",
-    "terraform": "terraform -chdir=infra"
+    "terraform": "terraform -chdir=infra",
+    "versions": "npm run terraform output versions"
     
   },
   "author": "",

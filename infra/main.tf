@@ -9,6 +9,7 @@ module "label" {
 locals {
   apiname          = "fnd-api-s2"
   versions_mapping = { for version in var.versions : version => data.aws_api_gateway_rest_api.api_versions[version].id }
+  versions         = var.versions
 }
 
 # Pointer to the each versions' API Gateway
@@ -87,9 +88,9 @@ module "version_router" {
   description = "route the request to the requested api version"
   runtime     = "nodejs16.x"
 
-  s3_artifact_bucket = aws_s3_bucket.version_router_artifact.id
-  file_globs         = ["index.js"]
-  plaintext_params   = local.versions_mapping
+  s3_artifact_bucket     = aws_s3_bucket.version_router_artifact.id
+  file_globs             = ["index.js"]
+  plaintext_params       = local.versions_mapping
   lambda_code_source_dir = "${path.module}/../edge"
 }
 
@@ -102,10 +103,6 @@ resource "aws_s3_bucket_versioning" "version_router_artifact_versioning" {
   versioning_configuration {
     status = "Enabled"
   }
-}
-
-output "versions_mapping" {
-  value = local.versions_mapping
 }
 
 provider "aws" {

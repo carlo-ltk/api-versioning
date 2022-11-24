@@ -67,9 +67,9 @@ The two pieces are glued together by having `terraform` referencing the API Gate
 
 `Serverless` makes very easy to deploy the same application to multiples `stages` and accomplish it by creating a new stack (the set of resources needed to provide the API) for each `stage` we deploy. 
 
-We would leverage this to deploy multiples `versions` of the same application. 
+We will leverage this to deploy multiples `versions` of the same application. 
 
-We would do 
+We will do 
 
 `serverless deploy --stage daiquiri`
 
@@ -103,24 +103,54 @@ https://aws.amazon.com/blogs/compute/implementing-header-based-api-gateway-versi
 
 ## Usage
 
-In this prototype the available versions are stored in a `versions.auto.tfvars.json` file that get updated whenever a new version is created or removed. 
+### Requirements
 
-Let's assume the content of this file is the following: 
+To run this project you will need: 
+
+* terraform ~>1.3.0
+* jq
+* node 16.x
+
+You also need acccess to an AWS account and have the credentials already configured as usual. 
+
+### Setup 
+
+In the root directory run 
 
 ```
-{
-  "versions": [
-    "mojito",
-    "stable"
-  ]
-}
+npm ci
+```
+
+Then cd into the `infra` directory and run 
+
+```
+terraform init
+terraform apply
+```
+
+### Available version
+
+In this prototype the available versions are stored in a `versions.auto.tfvars.json` file that get updated whenever a new version is created or removed. 
+
+To access the available versions you can run 
+
+```
+npm run versions
+```
+
+
+```
+[
+  "mojito",
+  "stable",
+]
 ```
 
 There are two versions deployed, `stable` and `mojito`. 
 
 ### Serve the "daiquiri" version
 
-Let's assume we did some change to the API code and we would like to deploy them to a new `daiquiri` version. 
+Let's assume we did some changes to the API code and we would like to deploy them to a new `daiquiri` version. 
 
 We need to execute the `serve.sh` script with the new version name as argument
 
