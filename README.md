@@ -6,9 +6,11 @@
 * [Usage](#usage)
     * [Requirements](#requirements)
     * [Setup](#setup)
+    * [Available Versions](#available-versions)
     * [Deploy new version](#serve-the-daiquiri-version)
     * [Consume new version](#consume-the-daiquiri-version)
     * [Dismiss a versions](#forget-the-daiquiri-version)
+    * [CI/CD Pipeline](#cicd-pipeline)
 
 
 ## The Problem
@@ -198,3 +200,7 @@ This will:
 * remove the stack associated to this version (`serverless remove --stage mojito`)
 * remove the version from `versions.auto.tfvars.json`
 * apply the terraform changes needed to remove the availability of this version.
+
+### CI/CD Pipeline
+
+Of course, the actions taken in the `./serve.sh` or `forget.sh` can be easily integrated in a GitHub workflow.
