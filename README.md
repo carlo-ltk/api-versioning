@@ -73,7 +73,7 @@ We would do
 
 to deploy te `daiquiri` version of the API. 
 
-The missing peace is how to instruct CloudFront to route the request to one stack or the another based on the request header. To do this we need: 
+The missing piece is how to instruct CloudFront to route the request to one stack or the another based on the request header. To do this we need: 
 
 * A new CloudFront origin for each new API Gateway that get created upon deployind a the serveless application to the new stage
 * A Lambda@Edge function that has awareness of the existing `versions` and is capable of routing the request to the proper origin.
