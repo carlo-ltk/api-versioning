@@ -128,7 +128,7 @@ terraform init
 terraform apply
 ```
 
-### Available version
+### Available versions
 
 In this prototype the available versions are stored in a `versions.auto.tfvars.json` file that get updated whenever a new version is created or removed. 
 
