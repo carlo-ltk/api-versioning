@@ -136,7 +136,7 @@ terraform apply
 
 ### Available versions
 
-In this prototype the available versions are stored in a `versions.auto.tfvars.json` file that get updated whenever a new version is created or removed. 
+In this prototype the available versions are stored in an SSM parameter that get updated whenever a new version is created or removed. 
 
 Outside of this prototype the versions would be better stored in an SSM parameter in AWS
 
@@ -169,7 +169,7 @@ We need to execute the `serve.sh` script with the new version name as argument
 The script will: 
 
 * Deploy the api to the `daiquiri` stage (this will deploy a new API Gateway and Lambda function by running `serverless deploy --stage daiquiri`) 
-* update the `versions.auto.tfvars.json` file with the new version 
+* update the SSM parameter that stores the versions 
 * apply the neeeded terraform changes to make the versions available through CloufFront
 
 
@@ -198,7 +198,7 @@ We will execture
 This will: 
 
 * remove the stack associated to this version (`serverless remove --stage mojito`)
-* remove the version from `versions.auto.tfvars.json`
+* remove the version from the SSM parameter value
 * apply the terraform changes needed to remove the availability of this version.
 
 ### CI/CD Pipeline

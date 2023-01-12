@@ -8,13 +8,24 @@ module "label" {
 
 locals {
   apiname          = "fnd-api-s2"
-  versions_mapping = { for version in var.versions : version => data.aws_api_gateway_rest_api.api_versions[version].id }
-  versions         = var.versions
+  versions         = jsondecode(aws_ssm_parameter.versions.insecure_value)
+  versions_mapping = { for version in local.versions : version => data.aws_api_gateway_rest_api.api_versions[version].id }
+}
+
+resource "aws_ssm_parameter" "versions" {
+  name  = "${module.label.id}-versions"
+  tags  = module.label.tags
+  type  = "String"
+  insecure_value = "[\"stable\"]"
+
+  lifecycle {
+    ignore_changes = [insecure_value]
+  }
 }
 
 # Pointer to the each versions' API Gateway
 data "aws_api_gateway_rest_api" "api_versions" {
-  for_each = toset(var.versions)
+  for_each = toset(local.versions)
   name     = "${local.apiname}-${each.key}"
 }
 
@@ -37,7 +48,7 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   dynamic "origin" {
-    for_each = [for v in var.versions : { version = v }]
+    for_each = [for v in local.versions : { version = v }]
     content {
       domain_name         = "${data.aws_api_gateway_rest_api.api_versions[origin.value.version].id}.execute-api.us-east-1.amazonaws.com"
       origin_id           = data.aws_api_gateway_rest_api.api_versions[origin.value.version].name

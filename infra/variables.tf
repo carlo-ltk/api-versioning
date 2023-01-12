@@ -1,3 +1,0 @@
-variable "versions" {
-  default = ["stable"]
-}
