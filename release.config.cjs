@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 module.exports = {
-    branches: ['main'],
+    // branches: ['main'],
+    branches: ['release-workflow'],
     plugins: [
       '@semantic-release/commit-analyzer',
       '@semantic-release/release-notes-generator',
