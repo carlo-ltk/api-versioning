@@ -31,7 +31,7 @@ jobs:
 
       - name: Terraform output 
         run: |
-          npm tun terraform -- init
+          npm run terraform -- init
           npm run terraform -- output
 
       #- name: Parsing test
