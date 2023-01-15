@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Warm up
-        run: echo "Warming up for release ${{ github.ref }}"
+        run: echo "Warming up for release ${{ github.ref }} sha (${{ github.ref }}) 
 
       - name: Checkout
         uses: actions/checkout@v3
