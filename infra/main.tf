@@ -9,11 +9,11 @@ module "label" {
 locals {
   apiname          = "fnd-api-s2"
   versions         = jsondecode(aws_ssm_parameter.versions.insecure_value)
-  commits           = [ for v in local.versions : v.commit ]
+  stages           = [ for v in local.versions : v.stage ]
   mapping = { for version in local.versions : version.tag => jsonencode(
     { 
-      commit = version.commit 
-      apigw = data.aws_api_gateway_rest_api.api_versions[version.commit].id
+      stage = version.stage
+      apigw = data.aws_api_gateway_rest_api.api_versions[version.stage].id
     }
   )}
 }
@@ -22,28 +22,21 @@ locals {
 [
   {
     tag: "v1.0.0",
-    commit: "stable"
+    stage: "stable"
   },
   {
     tag: "v1.1.0",
-    commit: "daiquiri"
+    stage: "daiquiri"
   },
 ]
 
-
-# backup 
-
-[
-  "daiquiri",
-  "stable"
-]
 */
 
 resource "aws_ssm_parameter" "versions" {
   name  = "${module.label.id}-versions"
   tags  = module.label.tags
   type  = "String"
-  insecure_value = "[\"stable\"]"
+  insecure_value = "[]"
 
   lifecycle {
     ignore_changes = [insecure_value]
@@ -52,7 +45,7 @@ resource "aws_ssm_parameter" "versions" {
 
 # Pointer to the each versions' API Gateway
 data "aws_api_gateway_rest_api" "api_versions" {
-  for_each = toset(local.commits)
+  for_each = toset(local.stages)
   name = "${local.apiname}-${each.key}"
 }
 
@@ -75,11 +68,11 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   dynamic "origin" {
-    for_each = [for c in local.commits : { commit = c }]
+    for_each = [for s in local.stages : { stage = s }]
     content {
-      domain_name         = "${data.aws_api_gateway_rest_api.api_versions[origin.value.commit].id}.execute-api.us-east-1.amazonaws.com"
-      origin_id           = data.aws_api_gateway_rest_api.api_versions[origin.value.commit].name
-      origin_path         = "/${origin.value.commit}"
+      domain_name         = "${data.aws_api_gateway_rest_api.api_versions[origin.value.stage].id}.execute-api.us-east-1.amazonaws.com"
+      origin_id           = data.aws_api_gateway_rest_api.api_versions[origin.value.stage].name
+      origin_path         = "/${origin.value.stage}"
       connection_attempts = 3
       connection_timeout  = 10
       custom_origin_config {

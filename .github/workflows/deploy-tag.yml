@@ -44,7 +44,7 @@ jobs:
       - name: Update versions SSM param
         id: update_versions
         run: |
-          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "${{ steps.version.outputs.TAG }}", commit: "${{ steps.version.outputs.COMMIT }}" }]')  >> $GITHUB_OUTPUT
+          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "${{ steps.version.outputs.TAG }}", stage: "${{ steps.version.outputs.COMMIT }}" }]')  >> $GITHUB_OUTPUT
 
       - name: Store updated versions in SSM param
         run: |

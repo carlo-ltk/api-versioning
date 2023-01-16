@@ -31,7 +31,7 @@ exports.handler = async (event) => {
             const version = JSON.parse(mapping[requestedVersion])
             
             const destDomain = `${version.apigw}.execute-api.us-east-1.amazonaws.com`
-            const destPath = `/${version.commit}`
+            const destPath = `/${version.stage}`
 
             if (destDomain === request.origin.custom.domainName) {
                 return request
