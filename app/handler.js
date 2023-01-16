@@ -11,7 +11,7 @@ module.exports.ping = async (event) => {
     statusCode: 200,
     body: JSON.stringify(
       {
-        message: `Hey there, I'm the ping function and I executed successfully!\n
+        message: `-- Hey there, I'm the ping function and I executed successfully!\n
         (${process.env.stage})`,
         // input: event,
       },
