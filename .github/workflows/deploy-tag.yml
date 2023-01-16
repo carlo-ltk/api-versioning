@@ -16,8 +16,8 @@ jobs:
         id: version
         run: | 
           echo ${{ github.ref }} | sed -e "s/^refs\/tags\///"
-          echo TAG=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///") >> $GITHUB_OUTPUT
-          echo COMMIT=${{ github.sha }} >> $GITHUB_OUTPUT
+          echo TAG=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///")>> $GITHUB_OUTPUT
+          echo COMMIT=${{ github.sha }} | cut -c 1-20 >> $GITHUB_OUTPUT
 
       - name: Output Version variables
         run: |
@@ -63,4 +63,4 @@ jobs:
       - name: Terraform output 
         run: |
           npm run terraform -- init
-          npm run terraform -- output      
+          npm run terraform -- output
