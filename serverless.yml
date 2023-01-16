@@ -19,7 +19,6 @@ provider:
   apiName: ${self:service}-${self:provider.stage}
   environment:
       stage: ${self:provider.stage}
-      versions: ${ssm:fnd-api-s2-versions}
   
 functions:
   ping:
