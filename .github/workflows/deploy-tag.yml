@@ -42,7 +42,7 @@ jobs:
       - name: JQ test
         uses: sergeysova/jq-action@v2
         with: 
-          cmd: echo ${{ steps.versions.outputs.value }} | jq '.[]'
+          cmd: 'echo ${{ steps.versions.outputs.value }} | jq \'.[]\''
 
       #- name: Parsing test
       #  run: echo ${{ github.ref }} | sed -e "s/^refs\/tags\/v//" | sed -r "s/\./d/g"
