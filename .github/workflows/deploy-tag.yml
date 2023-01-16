@@ -34,12 +34,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci
+      #- name: Install dependencies 👨🏻‍💻
+      #  run: npm ci
       
-      - name: Serverless Deploy ${{ steps.version.outputs.COMMIT }}
-        run: | 
-          npm run serverless deploy -- --stage ${{ steps.version.outputs.COMMIT }}
+      #- name: Serverless Deploy ${{ steps.version.outputs.COMMIT }}
+      #  run: | 
+      #    npm run serverless deploy -- --stage ${{ steps.version.outputs.COMMIT }}
 
       - name: Update versions SSM param
         id: update_versions
@@ -50,16 +50,16 @@ jobs:
         run: |
           aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value "${{ steps.update_versions.outputs.VERSIONS }}"
 
-      - name: Configure Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.3.0
+      #- name: Configure Terraform
+      #  uses: hashicorp/setup-terraform@v2
+      #  with:
+      #    terraform_version: 1.3.0
 
-      - name: Terraform apply
-        run: |
-          npm run terraform -- appy --auto-approve
+      #- name: Terraform apply
+      #  run: |
+      #    npm run terraform -- apply --auto-approve
 
-      - name: Terraform output 
-        run: |
-          npm run terraform -- init
-          npm run terraform -- output
+      #- name: Terraform output 
+      #  run: |
+      #    npm run terraform -- init
+      #    npm run terraform -- output
