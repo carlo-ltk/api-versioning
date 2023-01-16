@@ -48,7 +48,7 @@ jobs:
 
       - name: Store updated versions in SSM param
         run: |
-          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value ${{ steps.update_versions.outputs.VERSIONS }}
+          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value "${{ steps.update_versions.outputs.VERSIONS }}"
 
       - name: Configure Terraform
         uses: hashicorp/setup-terraform@v2
