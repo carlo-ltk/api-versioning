@@ -18,12 +18,12 @@ jobs:
         id: version
         run: | 
           echo ${{ github.ref }} | sed -e "s/^refs\/tags\///"
-          echo TAGNAME=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///") >> $GITHUB_OUTPUT
+          echo TAG=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///") >> $GITHUB_OUTPUT
           echo COMMIT=${{ github.sha }} >> $GITHUB_OUTPUT
 
       - name: Output Version variables
         run: |
-          echo "${{ steps.version.outputs.TAGNAME }}"
+          echo "${{ steps.version.outputs.TAG }}"
           echo "${{ steps.version.outputs.COMMIT }}"
 
       - name: Checkout
