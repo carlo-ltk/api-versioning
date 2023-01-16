@@ -9,8 +9,35 @@ module "label" {
 locals {
   apiname          = "fnd-api-s2"
   versions         = jsondecode(aws_ssm_parameter.versions.insecure_value)
-  versions_mapping = { for version in local.versions : version => data.aws_api_gateway_rest_api.api_versions[version].id }
+  commits           = [ for v in local.versions : v.commit ]
+  mapping = { for version in local.versions : version.tag => jsonencode(
+    { 
+      commit = version.commit 
+      apigw = data.aws_api_gateway_rest_api.api_versions[version.commit].id
+    }
+  )}
 }
+
+/* 
+[
+  {
+    tag: "v1.0.0",
+    commit: "stable"
+  },
+  {
+    tag: "v1.1.0",
+    commit: "daiquiri"
+  },
+]
+
+
+# backup 
+
+[
+  "daiquiri",
+  "stable"
+]
+*/
 
 resource "aws_ssm_parameter" "versions" {
   name  = "${module.label.id}-versions"
@@ -25,8 +52,8 @@ resource "aws_ssm_parameter" "versions" {
 
 # Pointer to the each versions' API Gateway
 data "aws_api_gateway_rest_api" "api_versions" {
-  for_each = toset(local.versions)
-  name     = "${local.apiname}-${each.key}"
+  for_each = toset(local.commits)
+  name = "${local.apiname}-${each.key}"
 }
 
 # Create CloudFront distribution for this stage
@@ -48,11 +75,11 @@ resource "aws_cloudfront_distribution" "cdn" {
   }
 
   dynamic "origin" {
-    for_each = [for v in local.versions : { version = v }]
+    for_each = [for c in local.commits : { commit = c }]
     content {
-      domain_name         = "${data.aws_api_gateway_rest_api.api_versions[origin.value.version].id}.execute-api.us-east-1.amazonaws.com"
-      origin_id           = data.aws_api_gateway_rest_api.api_versions[origin.value.version].name
-      origin_path         = "/${origin.value.version}"
+      domain_name         = "${data.aws_api_gateway_rest_api.api_versions[origin.value.commit].id}.execute-api.us-east-1.amazonaws.com"
+      origin_id           = data.aws_api_gateway_rest_api.api_versions[origin.value.commit].name
+      origin_path         = "/${origin.value.commit}"
       connection_attempts = 3
       connection_timeout  = 10
       custom_origin_config {
@@ -101,7 +128,7 @@ module "version_router" {
 
   s3_artifact_bucket     = aws_s3_bucket.version_router_artifact.id
   file_globs             = ["index.js"]
-  plaintext_params       = local.versions_mapping
+  plaintext_params       = local.mapping
   lambda_code_source_dir = "${path.module}/../edge"
 }
 

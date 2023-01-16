@@ -1,5 +1,8 @@
 const apiVersionHeaderName = "api-version"
 
+const fs = require('fs');
+const mapping = JSON.parse(fs.readFileSync('./config.json'))
+
 function hasValue(mappings){
     if(typeof mappings === 'undefined') return false;
     if(mappings === null) return false;
@@ -20,15 +23,15 @@ exports.handler = async (event) => {
             }
 
             const requestedVersion = request.headers[apiVersionHeaderName][0].value
-            const fs = require('fs');
-            const mapping = JSON.parse(fs.readFileSync('./config.json'))
-
-            if (!(requestedVersion in mapping)) {
+            
+           if (!(requestedVersion in mapping)) {
                 return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
             }
 
-            const destDomain = `${mapping[requestedVersion]}.execute-api.us-east-1.amazonaws.com`
-            const destPath = `/${requestedVersion}`
+            const version = JSON.parse(mapping[requestedVersion])
+            
+            const destDomain = `${version.apigw}.execute-api.us-east-1.amazonaws.com`
+            const destPath = `/${version.commit}`
 
             if (destDomain === request.origin.custom.domainName) {
                 return request
