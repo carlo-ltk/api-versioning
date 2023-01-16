@@ -18,7 +18,7 @@ jobs:
         id: tagname
         run: | 
           echo ${{ github.ref }} | sed -e "s/^refs\/tags\///"
-          echo TAGNAME=$(echo ${{ github.ref }} | sed -e \"s/^refs\/tags\///") >> $GITHUB_OUTPUT
+          echo TAGNAME=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///") >> $GITHUB_OUTPUT
 
       - name: Output tagname
         run: echo "${{ steps.tagname.outputs.TAGNAME }}"
