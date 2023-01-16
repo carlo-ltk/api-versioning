@@ -14,14 +14,17 @@ jobs:
       - name: Warm up
         run: echo "Warming up for release ${{ github.ref }} sha (${{ github.sha }})"
 
-      - name: Get tag name
-        id: tagname
+      - name: Set Version variables
+        id: version
         run: | 
           echo ${{ github.ref }} | sed -e "s/^refs\/tags\///"
-          echo TAGNAME=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///") >> $GITHUB_OUTPUT
+          echo TAG=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///") >> $GITHUB_OUTPUT
+          echo COMMIT=${{ github.sha }}
 
-      - name: Output tagname
-        run: echo "${{ steps.tagname.outputs.TAGNAME }}"
+      - name: Output Version variables
+        run: |
+          echo "${{ steps.version.outputs.TAG }}"
+          echo "${{ steps.version.outputs.COMMIT }}"
 
       - name: Checkout
         uses: actions/checkout@v3
