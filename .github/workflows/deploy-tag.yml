@@ -36,7 +36,7 @@ jobs:
 
       - name: Update versions SSM param
         run: |
-          aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: ${{ steps.version.outputs.TAG }}, commit: ${{ steps.version.outputs.COMMIT }} }]
+          aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: ${{ steps.version.outputs.TAG }}, commit: ${{ steps.version.outputs.COMMIT }} }]'
 
       #- name: Serverless Deploy ${{ steps.version.outputs.COMMIT }}
       #  run: | 
