@@ -34,29 +34,31 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Update versions SSM param
-        run: |
-          aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "${{ steps.version.outputs.TAG }}", commit: "${{ steps.version.outputs.COMMIT }}" }]'
+      
+      - name: Serverless Deploy ${{ steps.version.outputs.COMMIT }}
+        run: | 
+          npm run serverless deploy -- --stage ${{ steps.version.outputs.COMMIT }}
 
-      #- name: Serverless Deploy ${{ steps.version.outputs.COMMIT }}
-      #  run: | 
-      #    npm run serverless deploy -- --stage ${{ steps.version.outputs.COMMIT }}
+      - name: Update versions SSM param
+        id: update_versions
+        run: |
+          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "${{ steps.version.outputs.TAG }}", commit: "${{ steps.version.outputs.COMMIT }}" }]')  >> $GITHUB_OUTPUT
+
+      - name: Store updated versions in SSM param
+        run: |
+          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value ${{ steps.update_versions.outputs.VERSIONS }}
+
 
       - name: Configure Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.3.0
 
+      - name: Terraform apply
+        run: |
+          npm run terraform -- appy --auto-approve
+
       - name: Terraform output 
         run: |
           npm run terraform -- init
-          npm run terraform -- output
-
-      #- name: AWS get SSM param and run JQ
-      #  run: |
-      #    aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.[]'
-
-      #- name: Parsing test
-      #  run: echo ${{ github.ref }} | sed -e "s/^refs\/tags\/v//" | sed -r "s/\./d/g"
-
-      
+          npm run terraform -- output      
