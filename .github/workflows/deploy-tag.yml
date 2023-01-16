@@ -11,9 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Warm up
-        run: echo "Warming up for release ${{ github.ref }} sha (${{ github.sha }})"
-
+      
       - name: Set Version variables
         id: version
         run: | 
@@ -35,7 +33,15 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-    
+
+      - name: Update versions SSM param
+        run: |
+          aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text) | jq '.  += [ { tag: ${{ steps.version.outputs.TAG }}, commit: ${{ steps.version.outputs.COMMIT }} }]
+
+      #- name: Serverless Deploy ${{ steps.version.outputs.COMMIT }}
+      #  run: | 
+      #    npm run serverless deploy -- --stage ${{ steps.version.outputs.COMMIT }}
+
       - name: Configure Terraform
         uses: hashicorp/setup-terraform@v2
         with:
@@ -46,11 +52,9 @@ jobs:
           npm run terraform -- init
           npm run terraform -- output
 
-      - name: AWS get SSM param and run JQ
-        run: |
-          aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.[]'
-
-      
+      #- name: AWS get SSM param and run JQ
+      #  run: |
+      #    aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.[]'
 
       #- name: Parsing test
       #  run: echo ${{ github.ref }} | sed -e "s/^refs\/tags\/v//" | sed -r "s/\./d/g"
