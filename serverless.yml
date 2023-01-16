@@ -18,7 +18,8 @@ provider:
   region: us-east-1
   apiName: ${self:service}-${self:provider.stage}
   environment:
-      version: ${self:provider.stage}
+      stage: ${self:provider.stage}
+      versions: ${ssm:fnd-api-s2-versions}
   
 functions:
   ping:

@@ -1,4 +1,5 @@
 const apiVersionHeaderName = "api-version"
+const fallbackVersion = "stable"
 
 const fs = require('fs');
 const mapping = JSON.parse(fs.readFileSync('./config.json'))
@@ -22,10 +23,11 @@ exports.handler = async (event) => {
                 return request
             }
 
-            const requestedVersion = request.headers[apiVersionHeaderName][0].value
+            let requestedVersion = request.headers[apiVersionHeaderName][0].value
             
            if (!(requestedVersion in mapping)) {
-                return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
+                //return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
+                requestedVersion = fallbackVersion
             }
 
             const version = JSON.parse(mapping[requestedVersion])
