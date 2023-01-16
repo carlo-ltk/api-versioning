@@ -34,6 +34,10 @@ jobs:
           npm run terraform -- init
           npm run terraform -- output
 
+      - name: AWS get SSM param
+        run: |
+          aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text
+
       #- name: Parsing test
       #  run: echo ${{ github.ref }} | sed -e "s/^refs\/tags\/v//" | sed -r "s/\./d/g"
 
