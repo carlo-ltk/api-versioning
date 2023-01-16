@@ -35,8 +35,14 @@ jobs:
           npm run terraform -- output
 
       - name: AWS get SSM param
+        id: versions
         run: |
           aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text
+
+      - name: JQ test
+        uses: sergeysova/jq-action@v2
+        with: 
+          cmd: echo ${{ steps.versions.outputs.value }} | jq '.[]'
 
       #- name: Parsing test
       #  run: echo ${{ github.ref }} | sed -e "s/^refs\/tags\/v//" | sed -r "s/\./d/g"
