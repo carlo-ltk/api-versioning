@@ -15,8 +15,13 @@ jobs:
         run: echo "Warming up for release ${{ github.ref }} sha (${{ github.sha }})"
 
       - name: Get tag name
+        id: tagname
         run: | 
           echo ${{ github.ref }} | sed -e "s/^refs\/tags\///"
+          echo "TAGNAME=$(echo ${{ github.ref }} | sed -e \"s/^refs\/tags\///\")"
+
+      - name: Output tagname
+        run: echo "${{ steps.tagname.outputs.TAGNAME }}"
 
       - name: Checkout
         uses: actions/checkout@v3
