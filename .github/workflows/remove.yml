@@ -30,9 +30,10 @@ jobs:
           echo STAGE=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq -e  '.[] | select(.tag == "${{ steps.tag.outputs.TAG }}") | .stage') >> $GITHUB_OUTPUT
 
       - name: Check STAGE variable
-        #if: steps.stage.outputs.STAGE  == null
+        if: steps.stage.outputs.STAGE  == null
         run: |
            echo ${{ steps.stage.outputs.STAGE }}
+           exit 1
 
   remove: 
     runs-on: ubuntu-latest
