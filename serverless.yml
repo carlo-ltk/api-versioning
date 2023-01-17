@@ -11,9 +11,7 @@ package:
 
 provider:
   name: aws
-
   deploymentMethod: direct
-
   runtime: nodejs16.x
   stage: ${opt:stage, "stable"}
   region: us-east-1
