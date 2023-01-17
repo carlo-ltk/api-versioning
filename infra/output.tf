@@ -1,7 +1,11 @@
-output "versions_mapping" {
-  value = local.versions_mapping
-}
-
 output "versions" {
   value = local.versions
+}
+
+output "stages" {
+    value = local.stages
+}
+
+output "mapping" {
+  value = local.mapping
 }

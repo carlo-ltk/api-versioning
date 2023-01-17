@@ -7,6 +7,7 @@ frameworkVersion: '3'
 package:
   patterns:
     - '!infra/**'
+    - '!edge/**'
 
 provider:
   name: aws
@@ -18,8 +19,19 @@ provider:
   region: us-east-1
   apiName: ${self:service}-${self:provider.stage}
   environment:
-      version: ${self:provider.stage}
-  
+      stage: ${self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: 'arn:aws:logs:us-east-1:*:*'
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+      Resource: "*"
+
 functions:
   ping:
     handler: app/handler.ping

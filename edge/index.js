@@ -1,4 +1,8 @@
 const apiVersionHeaderName = "api-version"
+const fallbackVersion = "stable"
+
+const fs = require('fs');
+const mapping = JSON.parse(fs.readFileSync('./config.json'))
 
 function hasValue(mappings){
     if(typeof mappings === 'undefined') return false;
@@ -19,16 +23,17 @@ exports.handler = async (event) => {
                 return request
             }
 
-            const requestedVersion = request.headers[apiVersionHeaderName][0].value
-            const fs = require('fs');
-            const mapping = JSON.parse(fs.readFileSync('./config.json'))
-
-            if (!(requestedVersion in mapping)) {
-                return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
+            let requestedVersion = request.headers[apiVersionHeaderName][0].value
+            
+           if (!(requestedVersion in mapping)) {
+                //return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
+                requestedVersion = fallbackVersion
             }
 
-            const destDomain = `${mapping[requestedVersion]}.execute-api.us-east-1.amazonaws.com`
-            const destPath = `/${requestedVersion}`
+            const version = JSON.parse(mapping[requestedVersion])
+            
+            const destDomain = `${version.apigw}.execute-api.us-east-1.amazonaws.com`
+            const destPath = `/${version.stage}`
 
             if (destDomain === request.origin.custom.domainName) {
                 return request
