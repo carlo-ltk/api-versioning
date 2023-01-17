@@ -34,15 +34,15 @@ jobs:
         run: |
            exit 1
 
-    remove: 
-      runs-on: ubuntu-latest
-      needs: config
+  remove: 
+    runs-on: ubuntu-latest
+    needs: config
 
-      steps: 
-        - name: Check workflow run
-          run: |
-            echo {{ needs.config.output.stage}}
-            echo {{ needs.config.output.tag}} 
+    steps: 
+      - name: Check workflow run
+        run: |
+          echo {{ needs.config.output.stage}}
+          echo {{ needs.config.output.tag}} 
 
 
 
