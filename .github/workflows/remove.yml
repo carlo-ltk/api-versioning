@@ -56,7 +56,7 @@ jobs:
       - name: Determine new versions
         id: versions
         run: |
-          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  del(.[] | select(.tag == "${{ needs.config.outputs.tag }}"))'  >> $GITHUB_OUTPUT
+          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  del(.[] | select(.tag == "${{ needs.config.outputs.tag }}"))')  >> $GITHUB_OUTPUT
       - name: Store updated versions in SSM param
         run: |
           aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value '${{ steps.versions.outputs.VERSIONS }}'
