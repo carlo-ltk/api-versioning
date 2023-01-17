@@ -1,4 +1,4 @@
-name: deploy improved
+name: deploy
 
 on:
   release:
@@ -33,12 +33,12 @@ jobs:
           aws-region: us-east-1
       - name: Install dependencies
         run: npm ci      
-      - name: Deploy Stage {{ needs.config.outputs.stage}}
+      - name: Deploy Stage ${{ needs.config.outputs.stage}}
         run: |
-          npm run serverless deploy -- --stage {{ needs.config.outputs.stage}}
+          npm run serverless deploy -- --stage ${{ needs.config.outputs.stage}}
       - name: Update Versions
         run: |
-          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value '$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq \'.  += [ { tag: "{{ needs.config.outputs.tag }}", stage: "{{ needs.config.outputs.stage }}" }]\')'
+          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value '$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq \'.  += [ { tag: "${{ needs.config.outputs.tag }}", stage: "${{ needs.config.outputs.stage }}" }]\')'
       - name: Configure Terraform
         uses: hashicorp/setup-terraform@v2
         with:
