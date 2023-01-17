@@ -1,0 +1,22 @@
+name: remove
+
+on:
+  delete
+
+jobs: 
+
+  remove: 
+    name: Remove
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Warm up
+      - run: 
+        echo ${{ github.ref }}
+        echo ${{ github.sha }}
+    
+    
+
+
+
+  
