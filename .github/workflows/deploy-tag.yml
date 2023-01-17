@@ -47,7 +47,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.3.0
-      - name: Terraform apply
+      - name: Apply instrastructure changes
         run: |
           npm run terraform -- init
           npm run terraform -- apply --auto-approve
