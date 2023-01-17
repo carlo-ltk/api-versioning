@@ -19,6 +19,12 @@ provider:
   apiName: ${self:service}-${self:provider.stage}
   environment:
       stage: ${self:provider.stage}
+  iamRoleStatements:
+  - Effect: Allow
+    Action:
+      - ssm:GetParameter
+    Resource: "*"
+
   
 functions:
   ping:
