@@ -32,7 +32,7 @@ jobs:
       - name: Check STAGE variable
         #if: steps.stage.outputs.STAGE  == null
         run: |
-           echo {{ needs.config.output.stage}}
+           echo {{ steps.stage.outputs.STAGE}
 
   remove: 
     runs-on: ubuntu-latest
