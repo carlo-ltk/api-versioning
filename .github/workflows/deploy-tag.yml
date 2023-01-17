@@ -38,7 +38,7 @@ jobs:
           npm run serverless deploy -- --stage ${{ needs.config.outputs.stage}}
       - name: Update Versions
         run: |
-          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "${{ needs.config.outputs.tag }}", stage: "${{ needs.config.outputs.stage }}" }]') >>  >> $GITHUB_ENV
+          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "${{ needs.config.outputs.tag }}", stage: "${{ needs.config.outputs.stage }}" }]')  >> $GITHUB_ENV
           aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value '${{ env.VERSIONS }}'
       - name: Configure Terraform
         uses: hashicorp/setup-terraform@v2
