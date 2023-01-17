@@ -1,12 +1,21 @@
 'use strict';
 
+const { SSMClient, GetParameterCommand } = require("@aws-sdk/client-ssm");
+
 module.exports.ping = async (event) => {
 
-  //const versions = JSON.parse(process.env.versions)
-  //console.log(versions)
   const stage = process.env.stage
-  //const version = versions.filter( (item) => item.stage == stage).shift().tag
+  const ssmClient = new SSMClient()
+  const ssmParams = { Name: "fnd-api-s2-versions"}
+  const ssmCommand = new GetParameterCommand(params)
 
+  try {
+    const versions =  await ssmClient.send(ssmCommand)
+    console.log(versions)
+  } catch (error) {
+    console.error(error)
+  }
+  
   return {
     statusCode: 200,
     body: JSON.stringify(

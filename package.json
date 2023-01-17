@@ -6,11 +6,12 @@
     "serverless": "./node_modules/serverless/bin/serverless.js",
     "terraform": "terraform -chdir=infra",
     "versions": "npm run terraform output versions"
-    
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.245.0"
+  },
   "devDependencies": {
     "serverless": "^3.25.0"
   }

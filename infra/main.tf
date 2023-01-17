@@ -18,20 +18,6 @@ locals {
   )}
 }
 
-/* 
-[
-  {
-    tag: "v1.0.0",
-    stage: "stable"
-  },
-  {
-    tag: "v1.1.0",
-    stage: "daiquiri"
-  },
-]
-
-*/
-
 resource "aws_ssm_parameter" "versions" {
   name  = "${module.label.id}-versions"
   tags  = module.label.tags
