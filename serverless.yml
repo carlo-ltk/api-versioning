@@ -22,11 +22,11 @@ provider:
       stage: ${self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
-          Action:
-            - logs:CreateLogGroup
-            - logs:CreateLogStream
-            - logs:PutLogEvents
-          Resource: 'arn:aws:logs:us-east-1:*:*'
+      Action:
+        - logs:CreateLogGroup
+        - logs:CreateLogStream
+        - logs:PutLogEvents
+      Resource: 'arn:aws:logs:us-east-1:*:*'
     - Effect: Allow
       Action:
         - ssm:GetParameter
