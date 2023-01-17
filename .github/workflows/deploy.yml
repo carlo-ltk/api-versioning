@@ -3,7 +3,7 @@ concurrency: deploymment
 
 env:
   # Set this to a number <= 25 since the max number of CloudFront distrubution origins is 25
-  MAX_VERSIONS: 3
+  MAX_VERSIONS: 5
 
 on:
   release:

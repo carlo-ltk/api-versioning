@@ -32,7 +32,7 @@ jobs:
       - name: Check STAGE variable
         if: steps.stage.outputs.STAGE  == null
         run: |
-           echo ${{ steps.stage.outputs.STAGE }}
+           echo "::error::A deployed version for the tag: ${{ steps.tag.outputs.TAG }} has not been found the workflow is aborted"
            exit 1
 
   remove: 
