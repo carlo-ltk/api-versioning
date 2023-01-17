@@ -7,8 +7,9 @@ jobs:
 
   config: 
     runs-on: ubuntu-latest
-    tag: ${{ steps.version.outputs.TAG }}
-    stage: ${{ steps.version.outputs.STAGE }}
+    outputs: 
+      tag: ${{ steps.version.outputs.TAG }}
+      stage: ${{ steps.version.outputs.STAGE }}
     
     steps: 
       - name: Setup Version Variables
