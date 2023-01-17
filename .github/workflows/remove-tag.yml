@@ -11,7 +11,7 @@ jobs:
 
     steps: 
       - name: Warm up
-      - run: |
+        run: |
           echo ${{ github.ref }}
           echo ${{ github.sha }}
     
