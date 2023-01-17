@@ -1,7 +1,7 @@
 name: remove
 
 on:
-  delete
+  workflow_dispatch
 
 jobs: 
 
@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps: 
-      - name: Warm up
+      - name: config
+        id: config
         run: |
           echo ${{ github.ref }}
           echo ${{ github.sha }}
