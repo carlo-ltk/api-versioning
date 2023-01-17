@@ -32,7 +32,7 @@ jobs:
       - name: Check STAGE variable
         #if: steps.stage.outputs.STAGE  == null
         run: |
-           echo {{ steps.stage.outputs.STAGE}
+           echo ${{ steps.stage.outputs.STAGE}
 
   remove: 
     runs-on: ubuntu-latest
@@ -41,8 +41,8 @@ jobs:
     steps: 
       - name: Check workflow run
         run: |
-          echo {{ needs.config.output.stage}}
-          echo {{ needs.config.output.tag}} 
+          echo ${{ needs.config.output.stage}}
+          echo ${{ needs.config.output.tag}} 
 
 
 
