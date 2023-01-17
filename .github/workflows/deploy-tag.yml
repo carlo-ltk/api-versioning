@@ -7,7 +7,6 @@ on:
 jobs:
 
   config: 
-    name: config
     runs-on: ubuntu-latest
     outputs: 
       tag: ${{ steps.version.outputs.TAG }}
@@ -20,8 +19,8 @@ jobs:
           echo STAGE=${{ github.sha }} | cut -c 1-20 >> $GITHUB_OUTPUT
 
   deploy: 
-    name: deploy
     needs: config
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -39,8 +38,7 @@ jobs:
           npm run serverless deploy -- --stage {{ needs.config.outputs.stage}}
       - name: Update Versions
         run: |
-          echo VERSIONS=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq '.  += [ { tag: "{{ needs.config.outputs.tag }}", stage: "{{ needs.config.outputs.stage }}" }]')  >> $GITHUB_OUTPUT
-          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value '${{ VERSIONS }}'
+          aws ssm put-parameter --name fnd-api-s2-versions --overwrite --value '$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq \'.  += [ { tag: "{{ needs.config.outputs.tag }}", stage: "{{ needs.config.outputs.stage }}" }]\')'
       - name: Configure Terraform
         uses: hashicorp/setup-terraform@v2
         with:
