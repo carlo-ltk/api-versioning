@@ -50,7 +50,7 @@ jobs:
         run: npm ci
       - name: Remove Stage ${{ needs.config.outputs.stage}}
         run: |
-          npm run serverless deploy -- --stage ${{ needs.config.outputs.stage }}
+          npm run serverless remove -- --stage ${{ needs.config.outputs.stage }}
       - name: Determine new versions
         id: versions
         run: |
