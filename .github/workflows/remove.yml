@@ -41,8 +41,8 @@ jobs:
     steps: 
       - name: Check workflow run
         run: |
-          echo ${{ needs.config.output.stage }}
-          echo ${{ needs.config.output.tag }} 
+          echo ${{ needs.config.outputs.stage }}
+          echo ${{ needs.config.outputs.tag }} 
 
 
 
