@@ -41,7 +41,7 @@ jobs:
       - name: Versions count check
         if: steps.versions_check.outputs.COUNT >= env.MAX_VERSIONS
         run: |
-          echo "::error::Number of deployed version exceeds the maximum number of max origins per CloudFront distrubution, delete some before deploy another one"
+          echo "::error::Number of deployed version exceeds the maximum number of versions that can be deployed (${{ env.MAX_VERSIONS }}), use the remove workflow to remove some version before deploying a new one"
           exit 1
       - name: Install dependencies
         run: npm ci      
