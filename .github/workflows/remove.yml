@@ -8,15 +8,14 @@ jobs:
   config: 
     runs-on: ubuntu-latest
     outputs: 
-      tag: ${{ steps.version.outputs.TAG }}
-      stage: ${{ steps.version.outputs.STAGE }}
+      tag: ${{ steps.tag.outputs.TAG }}
+      stage: ${{ steps.stage.outputs.STAGE }}
     
     steps: 
-      - name: Setup Version Variables
-        id: version
+      - name: Identify tag
+        id: tag
         run: |
           echo TAG=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///")>> $GITHUB_OUTPUT
-          #echo STAGE=${{ github.sha }} | cut -c 1-20 >> $GITHUB_OUTPUT
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
@@ -30,12 +29,13 @@ jobs:
            aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq -e  '.[] | select(.tag == "v1.30.1") | .stage'
 
       - name: Check existence of the version and fetch the associated stage
+        id: stage
         run: | 
           echo STAGE=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq -e  '.[] | select(.tag == "v1.30.1") | .stage') >> $GITHUB_OUTPUT
 
-      - name: Check Workflow
+      - name: Check stage
         run: |
-           echo "Hello"
+           echo ${{ steps.stage.outputs.STAGE }}
 
 
 
