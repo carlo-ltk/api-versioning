@@ -44,10 +44,10 @@ jobs:
           echo "::error::Number of deployed version exceeds the maximum number of versions that can be deployed (${{ env.MAX_VERSIONS }}), use the remove workflow to remove a version before deploying a new one"
           exit 1
       - name: Install dependencies
-        #uses: actions/setup-node@v3
-        #with:
-        #  node-version: 16
-        #  cache: 'npm'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
         run: npm ci      
       - name: Deploy Stage ${{ needs.config.outputs.stage}}
         run: |
