@@ -22,6 +22,12 @@ jobs:
     needs: config
     runs-on: ubuntu-latest
     steps:
+      # if a the same workflow is already running and is executing terraform, 
+      # the same workflow won't be able to get the lock
+      - name: Skip check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          concurrent_skipping: 'always'
       - name: Checkout
         uses: actions/checkout@v3
 
