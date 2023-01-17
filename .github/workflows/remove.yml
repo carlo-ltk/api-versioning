@@ -1,0 +1,39 @@
+name: remove
+
+on:
+  workflow_dispatch
+
+jobs: 
+
+  config: 
+    runs-on: ubuntu-latest
+    tag: ${{ steps.version.outputs.TAG }}
+    #stage: ${{ steps.version.outputs.STAGE }}
+    
+    steps: 
+      - name: Setup Version Variables
+        id: version
+        run: |
+          echo TAG=$(echo ${{ github.ref }} | sed -e "s/^refs\/tags\///")>> $GITHUB_OUTPUT
+          #echo STAGE=${{ github.sha }} | cut -c 1-20 >> $GITHUB_OUTPUT
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1.7.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Check existence of the version
+        run: |
+           aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq -e  '.[] | select(.tag == "v1.30.1") | .stage'
+
+      - name: Check existence of the version
+        run: |
+           echo "Hello"
+
+
+
+
+
+
