@@ -1,6 +1,9 @@
 name: deploy
 concurrency: deploymment
 
+env:
+  MAX_VERSIONS: 3
+
 on:
   release:
     types: [published]
@@ -36,7 +39,7 @@ jobs:
         run: |
           echo COUNT=$(aws ssm get-parameter --name fnd-api-s2-versions --query "Parameter.Value" --output text | jq -e '. | length') >>  $GITHUB_OUTPUT
       - name: Versions count check
-        if: steps.versions_check.outputs.COUNT >= 2
+        if: steps.versions_check.outputs.COUNT >= env.MAX_VERSIONS
         run: |
           echo "::error::Number of deployed version exceeds the maximum number of max origins per CloudFront distrubution, delete some before deploy another one"
           exit 1
