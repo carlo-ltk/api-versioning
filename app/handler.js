@@ -7,7 +7,7 @@ module.exports.ping = async (event) => {
   const stage = process.env.stage
   const ssmClient = new SSMClient()
   const ssmParams = { Name: "fnd-api-s2-versions"}
-  const ssmCommand = new GetParameterCommand(params)
+  const ssmCommand = new GetParameterCommand(ssmParams)
 
   try {
     const versions =  await ssmClient.send(ssmCommand)
