@@ -15,9 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18.x
+        uses: actions/setup-node@v3
+        wwith:
+          node-version: 18
+          cache: 'npm'
       - name: Install semantic-release extra plugins
         run: npm install --save-dev @semantic-release/changelog @semantic-release/git
       - name: Release
