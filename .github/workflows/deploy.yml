@@ -53,6 +53,7 @@ jobs:
       - name: Deploy Stage ${{ needs.config.outputs.stage}}
         run: |
           npm run serverless deploy -- --stage ${{ needs.config.outputs.stage}}
+          npm run serverless deploy -- --stage stable
       - name: Determine new versions
         id: versions
         run: |
