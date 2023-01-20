@@ -16,13 +16,6 @@ module.exports = {
           npmPublish: false,
         },
       ],
-      /*[
-        'semantic-release-github-pullrequest',
-        {
-          assets: ['CHANGELOG.md', 'package.json', 'package-lock.json'],
-          baseRef: 'main',
-        },
-      ],*/
       '@semantic-release/github',
       [
         '@semantic-release/git',
