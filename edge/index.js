@@ -1,4 +1,4 @@
-const apiVersionHeaderName = "Api-Version"
+const apiVersionHeaderName = "api-version"
 const fallbackVersion = "stable"
 
 const fs = require('fs');
@@ -65,13 +65,6 @@ exports.handler = async (event) => {
             request.headers['host'] = [{ key: 'host', value: destDomain}];
             console.log(`Altered request is: ${request}`)
             return request
-        
-        case 'viewer-request': 
-
-            console.log(eventType)
-            console.log(request)
-            return request
-        
         default:
             throw new Error(`Unhandled eventType [${eventType}]`)
     }

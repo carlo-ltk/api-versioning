@@ -95,12 +95,6 @@ resource "aws_cloudfront_distribution" "cdn" {
       lambda_arn   = module.version_router.arn
       include_body = false
     }
-
-    lambda_function_association {
-      event_type   = "viewer-request"
-      lambda_arn   = module.version_router.arn
-      include_body = false
-    }
   }
 }
 
