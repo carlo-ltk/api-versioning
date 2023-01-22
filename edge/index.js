@@ -70,6 +70,7 @@ exports.handler = async (event) => {
 
             console.log(eventType)
             console.log(request)
+            return request
         
         default:
             throw new Error(`Unhandled eventType [${eventType}]`)
