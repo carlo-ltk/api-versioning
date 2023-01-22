@@ -1,3 +1,10 @@
+## [1.30.1](https://github.com/carlo-ltk/api-versioning/compare/v1.30.0...v1.30.1) (2023-01-22)
+
+
+### Bug Fixes
+
+* log request in the edge function ([46d4999](https://github.com/carlo-ltk/api-versioning/commit/46d4999b138700c075a44dab3229d2aec12be748))
+
 # [1.30.0](https://github.com/carlo-ltk/api-versioning/compare/v1.29.0...v1.30.0) (2023-01-22)
 
 
