@@ -19,13 +19,14 @@ exports.handler = async (event) => {
     switch (eventType) {
         case 'origin-request':
 
-            if(!hasValue(request.headers[apiVersionHeaderName])){
-                return request
-            }
-
             console.log(request)
 
+            if(!hasValue(request.headers[apiVersionHeaderName])){
+                console.log(`Origin request has no ${apiVersionHeaderName} header, returning request as it is`)
+                return request
+            }
             let requestedVersion = request.headers[apiVersionHeaderName][0].value
+            console.log(`Requested versions is ${requestedVersion}`)
             
            if (!(requestedVersion in mapping)) {
                 //return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
@@ -34,6 +35,7 @@ exports.handler = async (event) => {
             }
 
             const version = JSON.parse(mapping[requestedVersion])
+            console.log(`Matching version: ${version}`)
             
             const destDomain = `${version.apigw}.execute-api.us-east-1.amazonaws.com`
             const destPath = `/${version.stage}`
@@ -60,7 +62,8 @@ exports.handler = async (event) => {
                 }
             };
         
-            request.headers['host'] = [{ key: 'host', value: destDomain}];            
+            request.headers['host'] = [{ key: 'host', value: destDomain}];
+            console.log(`Altered request is: ${request}`)
             return request
         default:
             throw new Error(`Unhandled eventType [${eventType}]`)
