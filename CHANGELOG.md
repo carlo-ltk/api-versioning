@@ -1,3 +1,10 @@
+## [1.30.2](https://github.com/carlo-ltk/api-versioning/compare/v1.30.1...v1.30.2) (2023-01-22)
+
+
+### Bug Fixes
+
+* set Access-Control-Allow-Origin header in api response ([537f457](https://github.com/carlo-ltk/api-versioning/commit/537f45721f2b68c86653ca1bdeec9d2b6564713c))
+
 ## [1.30.1](https://github.com/carlo-ltk/api-versioning/compare/v1.30.0...v1.30.1) (2023-01-22)
 
 
