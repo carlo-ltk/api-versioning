@@ -23,10 +23,13 @@ exports.handler = async (event) => {
                 return request
             }
 
+            console.log(request)
+
             let requestedVersion = request.headers[apiVersionHeaderName][0].value
             
            if (!(requestedVersion in mapping)) {
                 //return { status: '403', statusDescription: `requested version (${requestedVersion}) is not available`};
+                console.log(`Version ${requestedVersion} not found in mapping, default to ${fallbackVersion}`)
                 requestedVersion = fallbackVersion
             }
 
@@ -36,6 +39,7 @@ exports.handler = async (event) => {
             const destPath = `/${version.stage}`
 
             if (destDomain === request.origin.custom.domainName) {
+                console.log(`destDomain ${destDomain} match ${request.origin.custom.domainName} return request as it is`)
                 return request
             }
 
