@@ -1,4 +1,5 @@
 name: remove
+concurrency: deploymment
 
 on:
   workflow_dispatch
