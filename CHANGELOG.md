@@ -1,3 +1,10 @@
+## [1.31.2](https://github.com/carlo-ltk/api-versioning/compare/v1.31.1...v1.31.2) (2023-01-22)
+
+
+### Bug Fixes
+
+* remove viewer-request response ([950ccc0](https://github.com/carlo-ltk/api-versioning/commit/950ccc05b78c9b234d1a3a7dfce49dd3f7cb237a))
+
 ## [1.31.1](https://github.com/carlo-ltk/api-versioning/compare/v1.31.0...v1.31.1) (2023-01-22)
 
 
