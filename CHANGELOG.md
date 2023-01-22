@@ -1,3 +1,10 @@
+# [1.31.0](https://github.com/carlo-ltk/api-versioning/compare/v1.30.4...v1.31.0) (2023-01-22)
+
+
+### Features
+
+* viwer-request function association ([7165ff7](https://github.com/carlo-ltk/api-versioning/commit/7165ff7732d8746f68e97b5a08a66b16770bf707))
+
 ## [1.30.4](https://github.com/carlo-ltk/api-versioning/compare/v1.30.3...v1.30.4) (2023-01-22)
 
 
