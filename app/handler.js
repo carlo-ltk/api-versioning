@@ -29,5 +29,8 @@ module.exports.ping = async (event) => {
       null,
       2
     ),
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    }
   }
 }
