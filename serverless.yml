@@ -37,3 +37,4 @@ functions:
       - http:
           path: /ping
           method: get
+          cors: true
