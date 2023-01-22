@@ -50,7 +50,7 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm ci      
-      - name: Deploy Stage ${{ needs.config.outputs.stage}}
+      - name: Deploy Stages stable,${{ needs.config.outputs.stage}}
         run: |
           npm run serverless deploy -- --stage ${{ needs.config.outputs.stage}}
           npm run serverless deploy -- --stage stable
