@@ -31,7 +31,7 @@ module.exports.ping = async (event) => {
     ),
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Api-Version' 
+      'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id,Api-Version' 
     }
   }
 }
