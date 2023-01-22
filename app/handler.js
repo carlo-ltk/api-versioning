@@ -30,7 +30,8 @@ module.exports.ping = async (event) => {
       2
     ),
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Api-Version' 
     }
   }
 }

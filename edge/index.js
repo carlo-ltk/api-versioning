@@ -1,4 +1,4 @@
-const apiVersionHeaderName = "api-version"
+const apiVersionHeaderName = "Api-Version"
 const fallbackVersion = "stable"
 
 const fs = require('fs');
