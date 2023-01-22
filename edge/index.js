@@ -65,6 +65,12 @@ exports.handler = async (event) => {
             request.headers['host'] = [{ key: 'host', value: destDomain}];
             console.log(`Altered request is: ${request}`)
             return request
+        
+        case 'viewer-request': 
+
+            console.log(eventType)
+            console.log(request)
+        
         default:
             throw new Error(`Unhandled eventType [${eventType}]`)
     }
