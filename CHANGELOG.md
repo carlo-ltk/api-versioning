@@ -1,3 +1,10 @@
+## [1.30.4](https://github.com/carlo-ltk/api-versioning/compare/v1.30.3...v1.30.4) (2023-01-22)
+
+
+### Bug Fixes
+
+* Allow Api-Version header in the preflight response ([1643c6e](https://github.com/carlo-ltk/api-versioning/commit/1643c6ef8464a8d0a1b1f8cada37fa1ca827b43b))
+
 ## [1.30.3](https://github.com/carlo-ltk/api-versioning/compare/v1.30.2...v1.30.3) (2023-01-22)
 
 
