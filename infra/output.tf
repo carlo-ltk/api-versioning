@@ -3,9 +3,13 @@ output "versions" {
 }
 
 output "stages" {
-    value = local.stages
+  value = local.stages
 }
 
 output "mapping" {
   value = local.mapping
+}
+
+output "cf_distribution_id" {
+  value = aws_cloudfront_distribution.cdn.id
 }
