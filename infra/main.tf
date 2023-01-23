@@ -7,18 +7,20 @@ module "label" {
 }
 
 locals {
-  apiname          = "fnd-api-s2"
-  versions         = jsondecode(aws_ssm_parameter.versions.insecure_value)
-  stages           = [ for v in local.versions : v.stage ]
+  apiname = "fnd-api-s2"
+  #versions         = jsondecode(aws_ssm_parameter.versions.insecure_value)
+  versions = jsondecode(nonsensitive(data.aws_ssm_parameter.versions.value))
+  stages   = [for v in local.versions : v.stage]
   mapping = { for version in local.versions : version.tag => jsonencode(
-    { 
+    {
       stage = version.stage
       apigw = data.aws_api_gateway_rest_api.api_versions[version.stage].id
     }
-  )}
+  ) }
 }
 
-resource "aws_ssm_parameter" "versions" {
+# terraform -chdir=infra state rm aws_ssm_parameter.versions
+/*resource "aws_ssm_parameter" "versions" {
   name  = "${module.label.id}-versions"
   tags  = module.label.tags
   type  = "String"
@@ -27,16 +29,29 @@ resource "aws_ssm_parameter" "versions" {
   lifecycle {
     ignore_changes = [insecure_value]
   }
+}*/
+data "aws_ssm_parameter" "versions" {
+  name = "${module.label.id}-versions"
 }
 
 # Pointer to the each versions' API Gateway
 data "aws_api_gateway_rest_api" "api_versions" {
   for_each = toset(local.stages)
-  name = "${local.apiname}-${each.key}"
+  name     = "${local.apiname}-${each.key}"
 }
 
 # Create CloudFront distribution for this stage
 resource "aws_cloudfront_distribution" "cdn" {
+
+  # The CloudFront distribution is a resource managed by both this terraform project 
+  # and the one in ./severless folder. While is generally not a good practice having 
+  # two projects managing the same resource, each project manages different set of attributes.
+  #
+  # This proejct takes care of everything except the origins that are managed by the other one.
+  lifecycle {
+    ignore_changes = [origin]
+  }
+
   comment         = module.label.id
   enabled         = true
   is_ipv6_enabled = true
@@ -71,6 +86,8 @@ resource "aws_cloudfront_distribution" "cdn" {
       }
     }
   }
+
+
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD", "OPTIONS"]
