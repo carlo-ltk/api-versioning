@@ -1,6 +1,6 @@
 {
   "name": "fnd-api-s2",
-  "version": "1.31.2",
+  "version": "1.32.0",
   "description": "api versioning prototype",
   "scripts": {
     "serverless": "./node_modules/serverless/bin/serverless.js",

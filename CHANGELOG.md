@@ -1,3 +1,10 @@
+# [1.32.0](https://github.com/carlo-ltk/api-versioning/compare/v1.31.2...v1.32.0) (2023-01-23)
+
+
+### Features
+
+* offload responsability to update CloudFront origns to dedicated terraform project ([b84e5bb](https://github.com/carlo-ltk/api-versioning/commit/b84e5bb8c33e47e91c41687d914c727b9e572d33))
+
 ## [1.31.2](https://github.com/carlo-ltk/api-versioning/compare/v1.31.1...v1.31.2) (2023-01-22)
 
 
