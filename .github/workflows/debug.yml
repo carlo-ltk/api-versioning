@@ -12,19 +12,18 @@ jobs:
       - name: step1
         id: step1
         run: |
-          echo "COUNT=3" >> $GITHUB_OUTPUT
-      - name: step2
-        run: |
-          echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
-          if [ ${{ steps.step1.outputs.COUNT }} -ge ${{ env.MAX_VERSIONS }} ]
+          COUNT=3
+          echo "COUNT=$COUNT" >> $GITHUB_OUTPUT
+          if [ $COUNT -ge ${{ env.MAX_VERSIONS }} ]
           then
             echo "TOO_MANY=true" >> $GITHUB_ENV
           else
             echo "TOO_MANY=false" >> $GITHUB_ENV
           fi
-      - name: ech check result
+      - name: echo variables
         run: |
-          echo "${{ env.TOO_MANY }}"
+          echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
+          echo "TOO_MANY (output): ${{ env.TOO_MANY }}"
       - name: check 
         if: ${{  env.TOO_MANY == 'true' }}
         run: |
