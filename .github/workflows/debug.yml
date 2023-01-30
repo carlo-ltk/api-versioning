@@ -13,19 +13,15 @@ jobs:
         id: step1
         run: |
           echo "COUNT=3" >> $GITHUB_OUTPUT
-          echo "COUNT=3" >> $GITHUB_ENV
       - name: step2
         run: |
           echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
-          echo "COUNT (env): ${{ env.COUNT }}"
-          echo "MAX_VERSIONS: ${{ env.MAX_VERSIONS }}"
-      - name: echo check result
+          [ ${{ steps.step1.outputs.COUNT }} -ge ${{ env.MAX_VERSIONS }} ]; echo "TOO_MANY=$?" >> $GITHUB_OUTPUT
+      - name: ech check result
         run: |
-          echo "${{  steps.step1.outputs.COUNT >= env.MAX_VERSIONS }}"
-          echo ${{ steps.step1.outputs.COUNT }}
-          echo ${{ env.MAX_VERSIONS }}
-      - name: check 1 
-        if: ${{  steps.step1.outputs.COUNT >= env.MAX_VERSIONS }}
+          echo ${{ steps.step1.outputs.TOO_MANY }}
+      - name: check 
+        if: ${{  steps.step1.outputs.TOO_MANY }}
         run: |
           echo "Too many versions"
           
