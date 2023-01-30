@@ -3,7 +3,7 @@ name: debug
 on: workflow_dispatch
 
 env:
-  MAX_VERSIONS: 10
+  MAX_VERSIONS: 1
 
 jobs:
   job1:
@@ -26,9 +26,10 @@ jobs:
         run: |
           echo "${{ env.TOO_MANY }}"
       - name: check 
-        if: ${{  env.TOO_MANY }}
+        if: ${{  env.TOO_MANY == true }}
         run: |
           echo "Too many versions"
+          exit 1
           
 
 
