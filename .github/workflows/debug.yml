@@ -21,6 +21,7 @@ jobs:
             echo "TOO_MANY=true" >> $GITHUB_OUTPUT
           else
             echo "TOO_MANY=false" >> $GITHUB_OUTPUT
+          fi
       - name: ech check result
         run: |
           echo ${{ steps.step1.outputs.TOO_MANY }}
