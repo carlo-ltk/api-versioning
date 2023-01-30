@@ -18,15 +18,15 @@ jobs:
           echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
           if [ ${{ steps.step1.outputs.COUNT }} -ge ${{ env.MAX_VERSIONS }} ]
           then
-            echo "TOO_MANY=true" >> $GITHUB_OUTPUT
+            echo "TOO_MANY=true" >> $GITHUB_ENV
           else
-            echo "TOO_MANY=false" >> $GITHUB_OUTPUT
+            echo "TOO_MANY=false" >> $GITHUB_ENV
           fi
       - name: ech check result
         run: |
-          echo ${{ steps.step1.outputs.TOO_MANY }}
+          echo "${{ env.TOO_MANY }}"
       - name: check 
-        if: ${{  steps.step1.outputs.TOO_MANY }}
+        if: ${{  env.TOO_MANY }}
         run: |
           echo "Too many versions"
           
