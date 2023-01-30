@@ -20,10 +20,9 @@ jobs:
           echo "COUNT (env): ${{ env.COUNT }}"
           echo "MAX_VERSIONS: ${{ env.MAX_VERSIONS }}"
       - name: check count
-        if: {{ steps.step1.outputs.COUNT >= env.MAX_VERSIONS }}
         run: |
           echo {{ steps.step1.outputs.COUNT >= env.MAX_VERSIONS }}
-          echo "Too many versions"
+          
 
 
     
