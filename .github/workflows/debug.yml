@@ -22,6 +22,7 @@ jobs:
       - name: check count
         run: |
           echo {{ steps.step1.outputs.COUNT >= env.MAX_VERSIONS }}
+          echo "{{ steps.step1.outputs.COUNT >= env.MAX_VERSIONS }}"
           
 
 
