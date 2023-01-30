@@ -16,7 +16,11 @@ jobs:
       - name: step2
         run: |
           echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
-          [ ${{ steps.step1.outputs.COUNT }} -ge ${{ env.MAX_VERSIONS }} ]; echo "TOO_MANY=$?" >> $GITHUB_OUTPUT
+          if [ ${{ steps.step1.outputs.COUNT }} -ge ${{ env.MAX_VERSIONS }} ]
+          then
+            echo "TOO_MANY=true" >> $GITHUB_OUTPUT
+          else
+            echo "TOO_MANY=false" >> $GITHUB_OUTPUT
       - name: ech check result
         run: |
           echo ${{ steps.step1.outputs.TOO_MANY }}
