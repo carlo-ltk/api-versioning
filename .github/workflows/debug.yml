@@ -12,17 +12,12 @@ jobs:
       - name: step1
         id: step1
         run: |
-          echo "COUNT=3" >> GITHUB_OUTPUT
-          echo "COUNT=3" >> GITHUB_ENV
+          echo "COUNT=3" >> $GITHUB_OUTPUT
+          echo "COUNT=3" >> $GITHUB_ENV
       - name: step2
         run: |
           echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
           echo "COUNT (env): ${{ env.COUNT }}"
           echo "MAX_VERSIONS: ${{ env.MAX_VERSIONS }}"
-      - name: Set color
-        id: random-color-generator
-        run: echo "SELECTED_COLOR=green" >> $GITHUB_OUTPUT
-      - name: Get color
-        run: echo "The selected color is ${{ steps.random-color-generator.outputs.SELECTED_COLOR }}"
 
     
