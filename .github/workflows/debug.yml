@@ -26,7 +26,7 @@ jobs:
         run: |
           echo "${{ env.TOO_MANY }}"
       - name: check 
-        if: ${{  env.TOO_MANY == true }}
+        if: ${{  env.TOO_MANY == 'true' }}
         run: |
           echo "Too many versions"
           exit 1
