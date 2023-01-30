@@ -13,9 +13,11 @@ jobs:
         id: step1
         run: |
           echo "COUNT=3" >> GITHUB_OUTPUT
+          echo "COUNT=3" >> GITHUB_ENV
       - name: step2
         run: |
-          echo "COUNT: ${{ steps.step1.outputs.COUNT }}"
+          echo "COUNT (output): ${{ steps.step1.outputs.COUNT }}"
+          echo "COUNT (env): ${{ env.COUNT }}"
           echo "MAX_VERSIONS: ${{ env.MAX_VERSIONS }}"
 
     
